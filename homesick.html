@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Himanshu Rawat — Security &amp; Python Developer</title>
+<meta name="description" content="Himanshu Rawat — Python developer building security &amp; reconnaissance tooling.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #090d11;
+    --surface: #0e1419;
+    --surface-raised: #131a21;
+    --border: #1c2830;
+    --text: #dbe6e9;
+    --muted: #5c7480;
+    --dim: #37474f;
+    --cyan: #2dd4bf;
+    --amber: #f0a955;
+    --green: #4ade80;
+    --red: #f2726b;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(rgba(45,212,191,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(45,212,191,0.025) 1px, transparent 1px);
+    background-size:42px 42px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--cyan); color:#04201c; }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--cyan);
+    outline-offset:3px;
+  }
+
+  .wrap{ max-width:1040px; margin:0 auto; padding:0 28px; position:relative; z-index:1; }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(9,13,17,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .brand{
+    font-family:var(--mono); font-weight:600; font-size:15px; color:var(--text);
+    display:flex; align-items:center; gap:8px;
+  }
+  .brand .dot{ width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green); }
+  .navlinks{ display:flex; gap:4px; font-family:var(--mono); font-size:13px; }
+  .navlinks a{
+    padding:8px 12px; border-radius:6px; color:var(--muted);
+    transition:color .15s, background .15s;
+  }
+  .navlinks a:hover{ color:var(--cyan); background:var(--surface-raised); }
+  .navlinks a .prompt{ color:var(--dim); margin-right:2px; }
+  .navlinks a:hover .prompt{ color:var(--cyan); }
+
+  @media (max-width:640px){
+    .navlinks span.label{ display:none; }
+  }
+
+  /* ---------- HERO / TERMINAL BOOT ---------- */
+  .hero{ padding:96px 0 64px; }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:22px;
+    align-items:stretch;
+  }
+  .hero-art{
+    position:relative;
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    min-height:300px;
+    background:#000;
+  }
+  .hero-art img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+    filter:saturate(0.9);
+  }
+  .hero-art-caption{
+    position:absolute; left:14px; bottom:14px;
+    background:rgba(5,2,2,0.55);
+    border:1px solid rgba(242,114,107,0.35);
+    color:#f2726b;
+    font-family:var(--mono); font-size:11.5px; line-height:1.5;
+    padding:8px 12px; border-radius:6px;
+    max-width:calc(100% - 28px);
+  }
+  @media (max-width:860px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-art{ min-height:220px; order:-1; }
+  }
+  .term{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .term-bar{
+    display:flex; align-items:center; gap:8px;
+    padding:11px 16px;
+    background:var(--surface-raised);
+    border-bottom:1px solid var(--border);
+  }
+  .term-bar span{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+  .term-bar .r{ background:#f2726b55; border:1px solid #f2726b; }
+  .term-bar .y{ background:#f0a95555; border:1px solid #f0a955; }
+  .term-bar .g{ background:#4ade8055; border:1px solid #4ade80; }
+  .term-title{ margin-left:8px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+  .term-body{
+    padding:26px 28px 30px;
+    font-family:var(--mono); font-size:14px;
+    min-height:300px;
+  }
+  .term-line{ margin-bottom:6px; opacity:0; animation:reveal .3s forwards; }
+  .term-line .p1{ color:var(--green); }
+  .term-line .p2{ color:var(--cyan); }
+  .term-line .cmd{ color:var(--text); }
+  .out-label{ color:var(--muted); display:inline-block; width:120px; }
+  .out-val{ color:var(--text); }
+  .out-accent{ color:var(--cyan); }
+  .cursor{
+    display:inline-block; width:8px; height:16px; background:var(--cyan);
+    animation:blink 1s step-end infinite; vertical-align:text-bottom; margin-left:2px;
+  }
+  @keyframes reveal{ to{ opacity:1; } }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .hero-sub{
+    margin-top:28px; display:flex; gap:14px; flex-wrap:wrap;
+  }
+  .btn{
+    font-family:var(--mono); font-size:13px; font-weight:600;
+    padding:11px 20px; border-radius:7px; border:1px solid var(--border);
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .15s, border-color .15s, background .15s;
+  }
+  .btn-primary{ background:var(--cyan); color:#04201c; border-color:var(--cyan); }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 8px 24px -8px rgba(45,212,191,0.5); }
+  .btn-ghost{ color:var(--text); }
+  .btn-ghost:hover{ border-color:var(--cyan); color:var(--cyan); transform:translateY(-2px); }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ padding:80px 0; border-top:1px solid var(--border); }
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; color:var(--cyan);
+    display:flex; align-items:center; gap:8px; margin-bottom:10px;
+  }
+  .eyebrow::before{ content:"$"; color:var(--dim); }
+  h2{
+    font-family:var(--mono); font-size:26px; font-weight:600; color:var(--text);
+    margin-bottom:34px;
+  }
+  h2 .muted-part{ color:var(--muted); }
+
+  /* ---------- SKILLS (scan-result style) ---------- */
+  .scanline{
+    display:grid;
+    grid-template-columns:22px 1fr 90px;
+    align-items:center;
+    gap:14px;
+    padding:13px 16px;
+    border:1px solid var(--border);
+    border-radius:7px;
+    margin-bottom:8px;
+    font-family:var(--mono); font-size:13.5px;
+    background:var(--surface);
+  }
+  .scanline .tag{ font-weight:700; }
+  .scanline .tag.ok{ color:var(--green); }
+  .scanline .tag.warn{ color:var(--amber); }
+  .scanline .name{ color:var(--text); }
+  .scanline .status{ text-align:right; color:var(--muted); }
+  .scanline .status.ok{ color:var(--green); }
+  .scanline .status.warn{ color:var(--amber); }
+  .skills-note{ margin-top:16px; font-size:13px; color:var(--muted); font-family:var(--mono); }
+
+  /* ---------- PROJECTS ---------- */
+  .projects{ display:grid; gap:18px; }
+  .proj{
+    border:1px solid var(--border); border-radius:10px; background:var(--surface);
+    padding:26px; transition:border-color .2s, transform .2s;
+  }
+  .proj:hover{ border-color:var(--cyan); transform:translateY(-3px); }
+  .proj-top{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .proj-name{ font-family:var(--mono); font-size:17px; font-weight:600; color:var(--text); }
+  .proj-tag{
+    font-family:var(--mono); font-size:11px; color:var(--cyan);
+    border:1px solid var(--cyan); padding:3px 8px; border-radius:20px;
+  }
+  .proj-desc{ margin:12px 0 16px; color:var(--muted); font-size:14.5px; max-width:60ch; }
+  .proj-meta{ display:flex; gap:10px; flex-wrap:wrap; font-family:var(--mono); font-size:12px; }
+  .chip{ border:1px solid var(--border); color:var(--muted); padding:4px 10px; border-radius:6px; }
+  .proj-links{ margin-top:16px; display:flex; gap:16px; }
+  .proj-links a{ font-family:var(--mono); font-size:13px; color:var(--cyan); }
+  .proj-links a:hover{ text-decoration:underline; }
+
+  /* ---------- RESUME ---------- */
+  .resume-box{
+    border:1px solid var(--border); border-radius:10px; background:var(--surface);
+    padding:30px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  .resume-box p{ color:var(--muted); font-size:14.5px; max-width:52ch; }
+  .resume-box .r-title{ font-family:var(--mono); font-size:16px; color:var(--text); margin-bottom:8px; }
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+  .contact-card{
+    border:1px solid var(--border); border-radius:10px; padding:20px; background:var(--surface);
+    transition:border-color .2s, transform .2s;
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .contact-card:hover{ border-color:var(--cyan); transform:translateY(-3px); }
+  .contact-card .k{ font-family:var(--mono); font-size:11px; color:var(--dim); text-transform:uppercase; letter-spacing:.06em; }
+  .contact-card .v{ font-family:var(--mono); font-size:14.5px; color:var(--text); }
+  .contact-card:hover .v{ color:var(--cyan); }
+
+  footer{
+    padding:34px 0 60px; text-align:center;
+    font-family:var(--mono); font-size:12px; color:var(--dim);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .term-line{ animation:none; opacity:1; }
+    .cursor{ animation:none; }
+    *{ transition:none !important; }
+  }
+
+  .reveal-on-scroll{ opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease; }
+  .reveal-on-scroll.in{ opacity:1; transform:none; }
+
+  /* ---------- CUSTOM CURSOR ---------- */
+  /* Base styles always present; only activates once JS confirms support
+     by adding .cursor-on to <html> — avoids CSS/JS media-query mismatches. */
+  .cur-dot, .cur-ring{
+    position:fixed;
+    top:0; left:0;
+    pointer-events:none;
+    z-index:9999;
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    will-change:transform;
+    opacity:0;
+  }
+  .cur-dot{
+    width:6px; height:6px;
+    background:var(--cyan);
+    box-shadow:0 0 8px var(--cyan);
+    transition:opacity .15s;
+  }
+  .cur-ring{
+    width:34px; height:34px;
+    border:1.5px solid var(--cyan);
+    transition:width .25s ease, height .25s ease, opacity .25s ease, background .25s ease;
+  }
+  html.cursor-on, html.cursor-on body, html.cursor-on a, html.cursor-on button{
+    cursor:none !important;
+  }
+  html.cursor-on .cur-dot{ opacity:1; }
+  html.cursor-on .cur-ring{ opacity:0.7; }
+  html.cursor-on .cur-ring.active{
+    width:54px; height:54px;
+    background:rgba(45,212,191,0.08);
+    opacity:1;
+  }
+  html.cursor-on .cur-ring.click{ width:26px; height:26px; }
+</style>
+</head>
+<body>
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
+
+
+<header>
+  <nav class="wrap">
+    <div class="brand"><span class="dot"></span>himanshurwtt</div>
+    <div class="navlinks">
+      <a href="#about"><span class="prompt">$</span><span class="label">whoami</span></a>
+      <a href="#skills"><span class="prompt">$</span><span class="label">skills</span></a>
+      <a href="#projects"><span class="prompt">$</span><span class="label">projects</span></a>
+      <a href="#resume"><span class="prompt">$</span><span class="label">resume</span></a>
+      <a href="#contact"><span class="prompt">$</span><span class="label">contact</span></a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" id="about">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="term">
+          <div class="term-bar">
+            <span class="r"></span><span class="y"></span><span class="g"></span>
+            <span class="term-title">himanshu@portfolio:~</span>
+          </div>
+          <div class="term-body" id="termBody"></div>
+        </div>
+        <div class="hero-art">
+          <img src="homesick1.png" alt="A small figure standing on a red, cratered horizon under a dark red sky.">
+          <div class="hero-art-caption">Homesick for a place<br>I'm not even sure exists</div>
+        </div>
+      </div>
+      <div class="hero-sub">
+        <a class="btn btn-primary" href="#projects">view projects</a>
+        <a class="btn btn-ghost" href="#contact">get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="eyebrow">nmap -sV skills/</div>
+      <h2>Scanning <span class="muted-part">// stack &amp; tooling</span></h2>
+
+      <div class="scanline"><span class="tag ok">[+]</span><span class="name">Python — scripting, automation, CLI tooling</span><span class="status ok">fluent</span></div>
+      <div class="scanline"><span class="tag ok">[+]</span><span class="name">Networking &amp; reconnaissance (DNS, HTTP, CT logs)</span><span class="status ok">fluent</span></div>
+      <div class="scanline"><span class="tag ok">[+]</span><span class="name">Security tooling &amp; OSINT workflows</span><span class="status ok">fluent</span></div>
+      <div class="scanline"><span class="tag warn">[!]</span><span class="name">Web development (HTML / CSS / JS)</span><span class="status warn">working</span></div>
+      <div class="scanline"><span class="tag warn">[!]</span><span class="name">Git &amp; version control workflows</span><span class="status warn">working</span></div>
+      <div class="scanline"><span class="tag ok">[+]</span><span class="name">Linux / CLI environments</span><span class="status ok">fluent</span></div>
+
+      <div class="skills-note">// legend: [+] fluent &amp; daily-driver &nbsp;·&nbsp; [!] actively building</div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="eyebrow">ls -la projects/</div>
+      <h2>Things I've <span class="muted-part">shipped</span></h2>
+
+      <div class="projects">
+        <div class="proj">
+          <div class="proj-top">
+            <span class="proj-name">SubDomain</span>
+            <span class="proj-tag">security · cli</span>
+          </div>
+          <p class="proj-desc">An interactive subdomain reconnaissance toolkit — combines certificate transparency log lookups, threaded DNS brute-forcing with custom wordlist support, and HTTP status probing, all behind a clean Rich-powered CLI menu.</p>
+          <div class="proj-meta">
+            <span class="chip">Python</span>
+            <span class="chip">rich</span>
+            <span class="chip">requests</span>
+            <span class="chip">threading</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/himanshurwtt/SubDomain" target="_blank" rel="noopener">source →</a>
+          </div>
+        </div>
+
+        <div class="proj">
+          <div class="proj-top">
+            <span class="proj-name">Osint-Bot</span>
+            <span class="proj-tag">security · discord bot</span>
+          </div>
+          <p class="proj-desc">A terminal-themed OSINT Discord bot — every command renders like a live shell session using Discord's ANSI code blocks (green prompts, colored status tags). 27+ commands across 10 modules: domain/IP recon (WHOIS, DNS, CT logs, subdomain discovery, tech-stack fingerprinting, typosquat detection, real ICMP ping), username &amp; social scanning across 12+10 platforms, email/breach checks, image EXIF &amp; reverse search, threat intel (AbuseIPDB, VirusTotal, Shodan favicon pivoting), Wayback/paste-dump lookups, and BTC/ETH wallet balance checks — plus an interactive `.help` panel and a "did you mean?" error system.</p>
+          <div class="proj-meta">
+            <span class="chip">Python 3.13</span>
+            <span class="chip">discord.py 2.3+</span>
+            <span class="chip">aiohttp</span>
+            <span class="chip">dnspython</span>
+            <span class="chip">python-whois</span>
+            <span class="chip">Pillow</span>
+            <span class="chip">mmh3</span>
+            <span class="chip">psutil</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/himanshurwtt/osint-bot" target="_blank" rel="noopener">source →</a>
+          </div>
+        </div>
+
+        <div class="proj">
+          <div class="proj-top">
+            <span class="proj-name">More in progress</span>
+            <span class="proj-tag">building</span>
+          </div>
+          <p class="proj-desc">Currently building out more tooling around recon automation and general dev projects — this section gets a new entry every time something ships.</p>
+          <div class="proj-meta">
+            <span class="chip">TBA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="resume">
+    <div class="wrap">
+      <div class="eyebrow">cat resume.pdf</div>
+      <h2>Resume</h2>
+      <div class="resume-box">
+        <div>
+          <div class="r-title">Himanshu Rawat — Python &amp; Security Tooling</div>
+          <p>Full experience, background, and history — download the PDF or reach out directly for a walkthrough.</p>
+        </div>
+        <a class="btn btn-primary" href="#" id="resumeBtn">↓ download resume</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="eyebrow">./contact --send</div>
+      <h2>Get in <span class="muted-part">touch</span></h2>
+      <div class="contact-grid">
+        <a class="contact-card" href="mailto:geek3301@proton.me">
+          <span class="k">email</span>
+          <span class="v">geek3301@proton.me</span>
+        </a>
+        <a class="contact-card" href="https://github.com/himanshurwtt" target="_blank" rel="noopener">
+          <span class="k">github</span>
+          <span class="v">@himanshurwtt</span>
+        </a>
+        <a class="contact-card" href="https://instagram.com/himanshuurwt" target="_blank" rel="noopener">
+          <span class="k">instagram</span>
+          <span class="v">@himanshuurwt</span>
+        </a>
+        <div class="contact-card">
+          <span class="k">discord</span>
+          <span class="v">geek7</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Himanshu Rawat — built with Python in mind, shipped in HTML.</div>
+</footer>
+
+<script>
+  // ---- terminal boot sequence ----
+  const lines = [
+    { html: '<span class="p1">himanshu</span><span class="p2">@</span><span class="p1">portfolio</span> <span class="cmd">:~$ whoami</span>' },
+    { html: '<span class="out-label">Name</span><span class="out-val">Himanshu Rawat</span>' },
+    { html: '<span class="out-label">Role</span><span class="out-val">Python Developer · Security &amp; Recon Tooling</span>' },
+    { html: '<span class="out-label">Focus</span><span class="out-val">Reconnaissance, automation, CLI tools</span>' },
+    { html: '<span class="out-label">Latest build</span><span class="out-accent">SubDomain — subdomain recon toolkit</span>' },
+    { html: '<span class="out-label">Status</span><span class="out-val" style="color:#4ade80">available for collaboration</span>' },
+    { html: '&nbsp;' },
+    { html: '<span class="p1">himanshu</span><span class="p2">@</span><span class="p1">portfolio</span> <span class="cmd">:~$</span><span class="cursor"></span>' },
+  ];
+
+  const body = document.getElementById('termBody');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function typeLines(){
+    if(reduce){
+      body.innerHTML = lines.map(l => `<div class="term-line" style="opacity:1">${l.html}</div>`).join('');
+      return;
+    }
+    let i = 0;
+    function next(){
+      if(i >= lines.length) return;
+      const div = document.createElement('div');
+      div.className = 'term-line';
+      div.style.animationDelay = '0s';
+      div.innerHTML = lines[i].html;
+      body.appendChild(div);
+      i++;
+      setTimeout(next, 260);
+    }
+    next();
+  }
+  typeLines();
+
+  // ---- scroll reveal ----
+  document.querySelectorAll('section').forEach(el => el.classList.add('reveal-on-scroll'));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal-on-scroll').forEach(el => io.observe(el));
+
+  // ---- resume button placeholder ----
+  document.getElementById('resumeBtn').addEventListener('click', function(e){
+    e.preventDefault();
+    alert('Add your resume PDF to the project and update this button\'s href to point to it.');
+  });
+  // ---- custom cursor ----
+  (function(){
+    const dot = document.getElementById('curDot');
+    const ring = document.getElementById('curRing');
+    if(!dot || !ring) return;
+
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!canHover || reduce) return;
+
+    document.documentElement.classList.add('cursor-on');
+
+    let mx = window.innerWidth/2, my = window.innerHeight/2;
+    let rx = mx, ry = my;
+    let moved = false;
+
+    dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
+    ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
+
+    window.addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      moved = true;
+      dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
+    });
+
+    function loop(){
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    document.addEventListener('mousedown', () => ring.classList.add('click'));
+    document.addEventListener('mouseup', () => ring.classList.remove('click'));
+
+    function bindHovers(){
+      document.querySelectorAll('a, button, .proj, .contact-card, .scanline').forEach(el => {
+        el.addEventListener('mouseenter', () => ring.classList.add('active'));
+        el.addEventListener('mouseleave', () => ring.classList.remove('active'));
+      });
+    }
+    bindHovers();
+
+    document.documentElement.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
+    document.documentElement.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '0.7'; });
+  })();
+</script>
+
+</body>
+</html>
