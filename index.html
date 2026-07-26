@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Himanshu Rawat — Security &amp; Python Developer</title>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="alternate icon" href="favicon.svg">
-<link rel="mask-icon" href="favicon.svg" color="#2dd4bf">
+<link rel="icon" href="favicon.svg?v=4" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.svg?v=4">
+<link rel="mask-icon" href="favicon.svg?v=4" color="#2dd4bf">
 <meta name="description" content="Himanshu Rawat — Python developer building security &amp; reconnaissance tooling.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,7 +51,6 @@
   a{ color:inherit; text-decoration:none; }
   ::selection{ background:var(--cyan); color:#04201c; }
 
-  /* focus visibility */
   a:focus-visible, button:focus-visible{
     outline:2px solid var(--cyan);
     outline-offset:3px;
@@ -59,7 +58,6 @@
 
   .wrap{ max-width:1040px; margin:0 auto; padding:0 28px; position:relative; z-index:1; }
 
-  /* ---------- NAV ---------- */
   header{
     position:sticky; top:0; z-index:50;
     background:rgba(9,13,17,0.85);
@@ -88,41 +86,161 @@
     .navlinks span.label{ display:none; }
   }
 
-  /* ---------- HERO / TERMINAL BOOT ---------- */
   .hero{ padding:96px 0 64px; }
+
+  .sig-block{
+    display:flex; flex-direction:column; align-items:center;
+    text-align:center; margin-bottom:56px;
+  }
+  .sig-mark{ width:220px; height:auto; overflow:visible; }
+  .sig-mark path{
+    fill:none; stroke:var(--cyan); stroke-width:1.4;
+    stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:1000; stroke-dashoffset:1000;
+    animation:sig-draw 2.2s cubic-bezier(.4,0,.2,1) forwards;
+  }
+  @keyframes sig-draw{ to{ stroke-dashoffset:0; } }
+  .sig-name{
+    margin-top:18px; font-family:var(--sans); font-weight:700;
+    font-size:26px; color:var(--text); letter-spacing:-.01em;
+  }
+  .sig-handle{
+    margin-top:4px; font-family:var(--mono); font-size:13px; color:var(--muted);
+  }
+  @media (prefers-reduced-motion: reduce){
+    .sig-mark path{ animation:none; stroke-dashoffset:0; }
+  }
+
   .hero-grid{
     display:grid;
-    grid-template-columns:1.1fr 0.9fr;
+    grid-template-columns:1.35fr 0.9fr;
     gap:22px;
     align-items:stretch;
   }
   .hero-art{
-    position:relative;
     border:1px solid var(--border);
     border-radius:10px;
     overflow:hidden;
-    min-height:300px;
-    background:#000;
+    background:var(--surface);
+    display:flex;
+    flex-direction:column;
   }
-  .hero-art img{
-    width:100%; height:100%;
-    object-fit:cover;
-    display:block;
-    filter:saturate(0.9);
+  .hero-art-bar{
+    padding:11px 16px;
+    background:var(--surface-raised);
+    border-bottom:1px solid var(--border);
+    font-family:var(--mono); font-size:12px; color:var(--muted);
   }
+  .hero-art-body{ padding:16px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .hero-scanline{
+    display:grid;
+    grid-template-columns:20px 1fr auto;
+    align-items:center;
+    gap:10px;
+    padding:9px 12px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    font-family:var(--mono); font-size:12px;
+    background:var(--bg);
+  }
+  .hero-scanline .tag{ font-weight:700; }
+  .hero-scanline .tag.ok{ color:var(--green); }
+  .hero-scanline .tag.warn{ color:var(--amber); }
+  .hero-scanline .tag.bad{ color:var(--red); }
+  .hero-scanline .name{ color:var(--text); }
+  .hero-scanline .status{ color:var(--muted); font-size:11px; }
+  .hero-scanline .status.ok{ color:var(--green); }
+  .hero-scanline .status.warn{ color:var(--amber); }
+  .hero-scanline .status.bad{ color:var(--red); }
   .hero-art-caption{
-    position:absolute; left:14px; bottom:14px;
-    background:rgba(5,2,2,0.55);
-    border:1px solid rgba(242,114,107,0.35);
-    color:#f2726b;
-    font-family:var(--mono); font-size:11.5px; line-height:1.5;
-    padding:8px 12px; border-radius:6px;
-    max-width:calc(100% - 28px);
+    margin-top:auto;
+    padding-top:8px;
+    font-family:var(--mono); font-size:11.5px; color:var(--cyan);
   }
   @media (max-width:860px){
     .hero-grid{ grid-template-columns:1fr; }
     .hero-art{ min-height:220px; order:-1; }
   }
+
+  .live-panel{ gap:14px; }
+  .live-row{
+    display:flex; align-items:center; justify-content:space-between;
+    font-family:var(--mono); font-size:12.5px;
+  }
+  .live-label{ color:var(--muted); text-transform:uppercase; letter-spacing:.05em; font-size:11px; }
+  .live-value{ color:var(--text); font-size:13.5px; }
+  .live-value.dim{ color:var(--muted); font-weight:400; }
+  .live-divider{ height:1px; background:var(--border); margin:2px 0; }
+
+  .live-discord{
+    display:flex; align-items:center; gap:12px;
+    padding:10px; border:1px solid var(--border); border-radius:8px;
+    background:var(--bg);
+  }
+  .discord-avatar{
+    width:38px; height:38px; border-radius:50%;
+    border:1px solid var(--border);
+    background:var(--surface-raised);
+    object-fit:cover;
+  }
+  .discord-info{ display:flex; flex-direction:column; gap:3px; min-width:0; flex:1; }
+  .discord-name{
+    font-family:var(--mono); font-size:13.5px; font-weight:600; color:var(--text);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .discord-status{
+    font-family:var(--mono); font-size:11.5px; color:var(--muted);
+    display:flex; align-items:center; gap:6px;
+  }
+  .status-dot{
+    width:7px; height:7px; border-radius:50%; background:var(--dim); flex-shrink:0;
+  }
+  .status-dot.online{ background:var(--green); box-shadow:0 0 6px var(--green); }
+  .status-dot.idle{ background:var(--amber); box-shadow:0 0 6px var(--amber); }
+  .status-dot.dnd{ background:var(--red); box-shadow:0 0 6px var(--red); }
+  .platform-icon{ width:12px; height:12px; color:var(--dim); flex-shrink:0; }
+  .discord-activity{
+    font-family:var(--mono); font-size:11.5px; color:var(--cyan);
+    padding-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .activity-elapsed{ color:var(--muted); }
+
+  .spotify-card{
+    display:flex; align-items:center; gap:12px;
+    padding:10px; border:1px solid var(--border); border-radius:8px;
+    background:var(--bg);
+  }
+  .spotify-art{
+    width:44px; height:44px; border-radius:6px; flex-shrink:0;
+    object-fit:cover; border:1px solid var(--border);
+  }
+  .spotify-info{ display:flex; flex-direction:column; gap:4px; min-width:0; flex:1; }
+  .spotify-track{
+    font-family:var(--mono); font-size:12.5px; font-weight:600; color:var(--text);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .spotify-artist{
+    font-family:var(--mono); font-size:11px; color:var(--muted);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .spotify-bar{
+    height:3px; border-radius:2px; background:var(--border);
+    margin-top:2px; overflow:hidden;
+  }
+  .spotify-bar-fill{
+    height:100%; background:var(--green); border-radius:2px;
+    transition:width 1s linear;
+  }
+  .spotify-time{
+    display:flex; justify-content:space-between;
+    font-family:var(--mono); font-size:10px; color:var(--dim); margin-top:2px;
+  }
+  .spotify-note{ font-family:var(--mono); font-size:11px; color:var(--dim); }
+
+  .live-github{ display:flex; flex-direction:column; gap:5px; }
+  .live-github .live-value{ font-size:12.5px; line-height:1.5; }
+  .live-github a{ color:var(--cyan); }
+  .live-github a:hover{ text-decoration:underline; }
   .term{
     background:var(--surface);
     border:1px solid var(--border);
@@ -174,7 +292,6 @@
   .btn-ghost{ color:var(--text); }
   .btn-ghost:hover{ border-color:var(--cyan); color:var(--cyan); transform:translateY(-2px); }
 
-  /* ---------- SECTION SHELL ---------- */
   section{ padding:80px 0; border-top:1px solid var(--border); }
   .eyebrow{
     font-family:var(--mono); font-size:12px; color:var(--cyan);
@@ -187,7 +304,6 @@
   }
   h2 .muted-part{ color:var(--muted); }
 
-  /* ---------- SKILLS (scan-result style) ---------- */
   .scanline{
     display:grid;
     grid-template-columns:22px 1fr 90px;
@@ -209,7 +325,6 @@
   .scanline .status.warn{ color:var(--amber); }
   .skills-note{ margin-top:16px; font-size:13px; color:var(--muted); font-family:var(--mono); }
 
-  /* ---------- PROJECTS ---------- */
   .projects{ display:grid; gap:18px; }
   .proj{
     border:1px solid var(--border); border-radius:10px; background:var(--surface);
@@ -228,8 +343,36 @@
   .proj-links{ margin-top:16px; display:flex; gap:16px; }
   .proj-links a{ font-family:var(--mono); font-size:13px; color:var(--cyan); }
   .proj-links a:hover{ text-decoration:underline; }
+  .proj-usage-toggle{
+    font-family:var(--mono); font-size:13px; color:var(--muted);
+    background:none; border:1px solid var(--border); border-radius:6px;
+    padding:6px 12px; cursor:pointer; transition:color .15s, border-color .15s;
+  }
+  .proj-usage-toggle:hover{ color:var(--cyan); border-color:var(--cyan); }
+  .proj-usage-toggle .arrow{ display:inline-block; transition:transform .2s; margin-left:6px; }
+  .proj.open .proj-usage-toggle .arrow{ transform:rotate(180deg); }
+  .proj-usage{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease, margin-top .3s ease;
+    margin-top:0;
+  }
+  .proj.open .proj-usage{
+    max-height:600px;
+    margin-top:16px;
+  }
+  .proj-usage-inner{
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:16px 18px;
+    font-family:var(--mono); font-size:12.5px; line-height:1.7;
+  }
+  .proj-usage-inner .u-comment{ color:var(--muted); }
+  .proj-usage-inner .u-cmd{ color:var(--cyan); }
+  .proj-usage-inner pre{ margin:4px 0 14px; white-space:pre-wrap; word-break:break-word; }
+  .proj-usage-inner pre:last-child{ margin-bottom:0; }
 
-  /* ---------- RESUME ---------- */
   .resume-box{
     border:1px solid var(--border); border-radius:10px; background:var(--surface);
     padding:30px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
@@ -237,16 +380,24 @@
   .resume-box p{ color:var(--muted); font-size:14.5px; max-width:52ch; }
   .resume-box .r-title{ font-family:var(--mono); font-size:16px; color:var(--text); margin-bottom:8px; }
 
-  /* ---------- CONTACT ---------- */
   .contact-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
   .contact-card{
-    border:1px solid var(--border); border-radius:10px; padding:20px; background:var(--surface);
+    border:1px solid var(--border); border-radius:10px; padding:18px 20px; background:var(--surface);
     transition:border-color .2s, transform .2s;
-    display:flex; flex-direction:column; gap:6px;
+    display:flex; align-items:center; gap:14px;
   }
   .contact-card:hover{ border-color:var(--cyan); transform:translateY(-3px); }
+  .contact-card .icon{
+    flex-shrink:0; width:36px; height:36px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--border); background:var(--bg);
+    color:var(--muted); transition:color .2s, border-color .2s;
+  }
+  .contact-card .icon svg{ width:18px; height:18px; }
+  .contact-card:hover .icon{ color:var(--cyan); border-color:var(--cyan); }
+  .contact-card .text{ display:flex; flex-direction:column; gap:3px; min-width:0; }
   .contact-card .k{ font-family:var(--mono); font-size:11px; color:var(--dim); text-transform:uppercase; letter-spacing:.06em; }
-  .contact-card .v{ font-family:var(--mono); font-size:14.5px; color:var(--text); }
+  .contact-card .v{ font-family:var(--mono); font-size:14.5px; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .contact-card:hover .v{ color:var(--cyan); }
 
   footer{
@@ -263,9 +414,6 @@
   .reveal-on-scroll{ opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease; }
   .reveal-on-scroll.in{ opacity:1; transform:none; }
 
-  /* ---------- CUSTOM CURSOR ---------- */
-  /* Base styles always present; only activates once JS confirms support
-     by adding .cursor-on to <html> — avoids CSS/JS media-query mismatches. */
   .cur-dot, .cur-ring{
     position:fixed;
     top:0; left:0;
@@ -304,7 +452,6 @@
 <div class="cur-dot" id="curDot"></div>
 <div class="cur-ring" id="curRing"></div>
 
-
 <header>
   <nav class="wrap">
     <div class="brand"><span class="dot"></span>himanshurwtt</div>
@@ -321,6 +468,13 @@
 <main>
   <section class="hero" id="about">
     <div class="wrap">
+      <div class="sig-block">
+        <svg class="sig-mark" viewBox="0 0 260 110" xmlns="http://www.w3.org/2000/svg">
+          <path pathLength="1000" d="M18 66 L165 22 L98 78 L228 30 L82 52 L150 40 L46 58 L228 30 L110 88 L18 66 Z" />
+        </svg>
+        <div class="sig-name">Himanshu Rawat</div>
+        <div class="sig-handle">himanshurwtt</div>
+      </div>
       <div class="hero-grid">
         <div class="term">
           <div class="term-bar">
@@ -330,8 +484,50 @@
           <div class="term-body" id="termBody"></div>
         </div>
         <div class="hero-art">
-          <img src="homesick1.png" alt="A small figure standing on a red, cratered horizon under a dark red sky.">
-          <div class="hero-art-caption">Homesick for a place<br>I'm not even sure exists</div>
+          <div class="hero-art-bar">$ status --live</div>
+          <div class="hero-art-body live-panel">
+            <div class="live-row">
+              <span class="live-label">local time (IST)</span>
+              <span class="live-value" id="liveClock">--:--:--</span>
+            </div>
+
+            <div class="live-divider"></div>
+
+            <div class="live-discord" id="discordCard">
+              <img class="discord-avatar" id="discordAvatar" src="" alt="" style="display:none;">
+              <div class="discord-info">
+                <span class="discord-name" id="discordName">connecting…</span>
+                <span class="discord-status" id="discordStatus">
+                  <span class="status-dot" id="discordDot"></span>
+                  <svg class="platform-icon" id="platformIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="display:none;"></svg>
+                  <span id="discordStatusText">checking presence</span>
+                </span>
+                <span class="discord-activity" id="discordActivity"></span>
+              </div>
+            </div>
+
+            <div class="spotify-card" id="spotifyCard" style="display:none;">
+              <img class="spotify-art" id="spotifyArt" src="" alt="">
+              <div class="spotify-info">
+                <span class="spotify-track" id="spotifyTrack"></span>
+                <span class="spotify-artist" id="spotifyArtist"></span>
+                <div class="spotify-bar"><div class="spotify-bar-fill" id="spotifyBarFill" style="width:0%"></div></div>
+                <div class="spotify-time">
+                  <span id="spotifyElapsed">0:00</span>
+                  <span id="spotifyDuration">0:00</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="live-divider"></div>
+
+            <div class="live-github">
+              <span class="live-label">latest github activity</span>
+              <span class="live-value dim" id="githubLine">fetching…</span>
+            </div>
+
+            <div class="hero-art-caption" id="liveCaption">live via lanyard + github api</div>
+          </div>
         </div>
       </div>
       <div class="hero-sub">
@@ -377,6 +573,24 @@
           </div>
           <div class="proj-links">
             <a href="https://github.com/himanshurwtt/SubDomain" target="_blank" rel="noopener">source →</a>
+            <button class="proj-usage-toggle" onclick="this.closest('.proj').classList.toggle('open')">usage <span class="arrow">▾</span></button>
+          </div>
+          <div class="proj-usage">
+            <div class="proj-usage-inner">
+<span class="u-comment"># clone and install</span>
+<pre><span class="u-cmd">git clone</span> https://github.com/himanshurwtt/SubDomain.git
+<span class="u-cmd">cd</span> SubDomain
+<span class="u-cmd">pip install</span> -r requirements.txt</pre>
+<span class="u-comment"># run it</span>
+<pre><span class="u-cmd">python</span> subdomain.py</pre>
+<span class="u-comment"># then choose a scan mode from the menu:</span>
+<pre>1. Full scan   (CT logs + brute-force + HTTP probe)
+2. CT logs only
+3. DNS brute-force only
+4. View last saved results
+5. About
+6. Check for updates</pre>
+            </div>
           </div>
         </div>
 
@@ -398,6 +612,26 @@
           </div>
           <div class="proj-links">
             <a href="https://github.com/himanshurwtt/osint-bot" target="_blank" rel="noopener">source →</a>
+            <button class="proj-usage-toggle" onclick="this.closest('.proj').classList.toggle('open')">usage <span class="arrow">▾</span></button>
+          </div>
+          <div class="proj-usage">
+            <div class="proj-usage-inner">
+<span class="u-comment"># clone and install</span>
+<pre><span class="u-cmd">git clone</span> https://github.com/himanshurwtt/osint-bot.git
+<span class="u-cmd">cd</span> osint-bot
+<span class="u-cmd">pip install</span> -r requirements.txt</pre>
+<span class="u-comment"># configure .env</span>
+<pre><span class="u-cmd">cp</span> .env.example .env
+DISCORD_TOKEN=your_bot_token_here
+OWNER_ID=your_discord_user_id</pre>
+<span class="u-comment"># enable Message Content + Server Members intents
+# in the Discord Developer Portal, then run:</span>
+<pre><span class="u-cmd">python</span> bash.py</pre>
+<span class="u-comment"># try a command in Discord, e.g.</span>
+<pre>.whois example.com
+.subdomains example.com
+.help</pre>
+            </div>
           </div>
         </div>
 
@@ -435,21 +669,41 @@
       <h2>Get in <span class="muted-part">touch</span></h2>
       <div class="contact-grid">
         <a class="contact-card" href="mailto:geek3301@proton.me">
-          <span class="k">email</span>
-          <span class="v">geek3301@proton.me</span>
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+          </span>
+          <span class="text">
+            <span class="k">email</span>
+            <span class="v">geek3301@proton.me</span>
+          </span>
         </a>
         <a class="contact-card" href="https://github.com/himanshurwtt" target="_blank" rel="noopener">
-          <span class="k">github</span>
-          <span class="v">@himanshurwtt</span>
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.79-.25.79-.55v-1.94c-3.2.7-3.87-1.54-3.87-1.54-.53-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.4-5.27 5.69.42.36.78 1.07.78 2.16v3.2c0 .31.21.66.8.55A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+          </span>
+          <span class="text">
+            <span class="k">github</span>
+            <span class="v">@himanshurwtt</span>
+          </span>
         </a>
         <a class="contact-card" href="https://instagram.com/himanshuurwt" target="_blank" rel="noopener">
-          <span class="k">instagram</span>
-          <span class="v">@himanshuurwt</span>
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </span>
+          <span class="text">
+            <span class="k">instagram</span>
+            <span class="v">@himanshuurwt</span>
+          </span>
         </a>
-        <div class="contact-card">
-          <span class="k">discord</span>
-          <span class="v">geek7</span>
-        </div>
+        <a class="contact-card" href="https://discord.com/users/1074363415591653387" target="_blank" rel="noopener">
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.9-1.52.07.07 0 0 0-.08.04c-.21.38-.45.86-.61 1.25a18.3 18.3 0 0 0-5.48 0 12.6 12.6 0 0 0-.62-1.25.08.08 0 0 0-.08-.04c-1.7.29-3.36.8-4.9 1.52a.07.07 0 0 0-.03.03C.98 8.6.31 12.68.65 16.72a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 5.99 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.22-2a.08.08 0 0 0-.04-.11 13 13 0 0 1-1.87-.89.08.08 0 0 1-.01-.13c.13-.09.25-.19.37-.28a.08.08 0 0 1 .08-.01c3.93 1.79 8.18 1.79 12.06 0a.08.08 0 0 1 .08.01c.12.1.24.19.37.28a.08.08 0 0 1-.01.13c-.6.35-1.22.65-1.87.89a.08.08 0 0 0-.04.11c.36.7.77 1.36 1.22 1.99a.08.08 0 0 0 .08.03 19.8 19.8 0 0 0 6-3.03.08.08 0 0 0 .03-.06c.4-4.68-.67-8.73-2.83-12.32a.06.06 0 0 0-.03-.03ZM8.02 14.24c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42Zm7.97 0c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42Z"/></svg>
+          </span>
+          <span class="text">
+            <span class="k">discord</span>
+            <span class="v">geek7</span>
+          </span>
+        </a>
       </div>
     </div>
   </section>
@@ -460,7 +714,6 @@
 </footer>
 
 <script>
-  // ---- terminal boot sequence ----
   const lines = [
     { html: '<span class="p1">himanshu</span><span class="p2">@</span><span class="p1">portfolio</span> <span class="cmd">:~$ whoami</span>' },
     { html: '<span class="out-label">Name</span><span class="out-val">Himanshu Rawat</span>' },
@@ -495,14 +748,213 @@
   }
   typeLines();
 
-  // ---- scroll reveal ----
+  (function(){
+    const DISCORD_ID = '1074363415591653387';
+    const GITHUB_USERNAME = 'himanshurwtt';
+
+    const clockEl = document.getElementById('liveClock');
+    function tick(){
+      const now = new Date();
+      const ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+      const hh = String(ist.getHours()).padStart(2,'0');
+      const mm = String(ist.getMinutes()).padStart(2,'0');
+      const ss = String(ist.getSeconds()).padStart(2,'0');
+      if(clockEl) clockEl.textContent = `${hh}:${mm}:${ss}`;
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    const nameEl = document.getElementById('discordName');
+    const dotEl = document.getElementById('discordDot');
+    const statusTextEl = document.getElementById('discordStatusText');
+    const avatarEl = document.getElementById('discordAvatar');
+    const activityEl = document.getElementById('discordActivity');
+    const platformIconEl = document.getElementById('platformIcon');
+    const spotifyCard = document.getElementById('spotifyCard');
+    const spotifyArt = document.getElementById('spotifyArt');
+    const spotifyTrack = document.getElementById('spotifyTrack');
+    const spotifyArtist = document.getElementById('spotifyArtist');
+    const spotifyBarFill = document.getElementById('spotifyBarFill');
+    const spotifyElapsed = document.getElementById('spotifyElapsed');
+    const spotifyDuration = document.getElementById('spotifyDuration');
+
+    const STATUS_LABEL = { online: 'online', idle: 'idle', dnd: 'do not disturb', offline: 'offline' };
+
+    const PLATFORM_ICONS = {
+      desktop: '<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',
+      mobile: '<rect x="6" y="2" width="12" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/>',
+      web: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20"/>'
+    };
+
+    function fmtTime(ms){
+      const totalSec = Math.max(0, Math.floor(ms / 1000));
+      const m = Math.floor(totalSec / 60);
+      const s = totalSec % 60;
+      return `${m}:${String(s).padStart(2,'0')}`;
+    }
+
+    function fmtElapsed(ms){
+      const totalSec = Math.max(0, Math.floor(ms / 1000));
+      const h = Math.floor(totalSec / 3600);
+      const m = Math.floor((totalSec % 3600) / 60);
+      const s = totalSec % 60;
+      if(h > 0) return `${h}h ${m}m`;
+      if(m > 0) return `${m}m ${s}s`;
+      return `${s}s`;
+    }
+
+    function renderDiscordFallback(msg){
+      if(nameEl) nameEl.textContent = 'Himanshu Rawat';
+      if(statusTextEl) statusTextEl.textContent = msg || 'presence unavailable';
+      if(dotEl) dotEl.className = 'status-dot';
+      if(avatarEl) avatarEl.style.display = 'none';
+      if(spotifyCard) spotifyCard.style.display = 'none';
+    }
+
+    let spotifyTimer = null;
+    let activityTimer = null;
+
+    function updateSpotifyProgress(start, end){
+      const now = Date.now();
+      const pct = Math.min(100, Math.max(0, ((now - start) / (end - start)) * 100));
+      if(spotifyBarFill) spotifyBarFill.style.width = pct + '%';
+      if(spotifyElapsed) spotifyElapsed.textContent = fmtTime(now - start);
+      if(now >= end && spotifyTimer) clearInterval(spotifyTimer);
+    }
+
+    function renderPresence(d){
+      const status = d.discord_status || 'offline';
+
+      if(nameEl) nameEl.textContent = d.discord_user.global_name || d.discord_user.username;
+      if(dotEl) dotEl.className = 'status-dot ' + (status !== 'offline' ? status : '');
+      if(statusTextEl) statusTextEl.textContent = STATUS_LABEL[status] || status;
+
+      if(avatarEl && d.discord_user.avatar){
+        avatarEl.src = `https://cdn.discordapp.com/avatars/${d.discord_user.id}/${d.discord_user.avatar}.png?size=64`;
+        avatarEl.style.display = '';
+      } else if(avatarEl){
+        avatarEl.style.display = 'none';
+      }
+
+      let platform = null;
+      if(d.active_on_discord_desktop) platform = 'desktop';
+      else if(d.active_on_discord_mobile) platform = 'mobile';
+      else if(d.active_on_discord_web) platform = 'web';
+      if(platformIconEl){
+        if(platform){
+          platformIconEl.innerHTML = PLATFORM_ICONS[platform];
+          platformIconEl.style.display = '';
+        } else {
+          platformIconEl.style.display = 'none';
+        }
+      }
+
+      if(activityTimer){ clearInterval(activityTimer); activityTimer = null; }
+      if(spotifyTimer){ clearInterval(spotifyTimer); spotifyTimer = null; }
+
+      if(d.listening_to_spotify && d.spotify){
+        const sp = d.spotify;
+        if(spotifyCard) spotifyCard.style.display = 'flex';
+        if(activityEl) activityEl.textContent = '';
+        if(spotifyArt) spotifyArt.src = sp.album_art_url || '';
+        if(spotifyTrack) spotifyTrack.textContent = sp.song;
+        if(spotifyArtist) spotifyArtist.textContent = sp.artist;
+        if(spotifyDuration) spotifyDuration.textContent = fmtTime(sp.timestamps.end - sp.timestamps.start);
+        updateSpotifyProgress(sp.timestamps.start, sp.timestamps.end);
+        spotifyTimer = setInterval(() => updateSpotifyProgress(sp.timestamps.start, sp.timestamps.end), 1000);
+      } else {
+        if(spotifyCard) spotifyCard.style.display = 'none';
+        const activity = (d.activities || []).find(a => a.type === 0 && a.name !== 'Custom Status');
+        if(activity){
+          const label = `▸ ${activity.name}${activity.details ? ' — ' + activity.details : ''}`;
+          if(activity.timestamps && activity.timestamps.start){
+            const start = activity.timestamps.start;
+            const render = () => {
+              if(activityEl) activityEl.innerHTML = `${label} <span class="activity-elapsed">(${fmtElapsed(Date.now() - start)})</span>`;
+            };
+            render();
+            activityTimer = setInterval(render, 1000);
+          } else if(activityEl){
+            activityEl.textContent = label;
+          }
+        } else if(activityEl){
+          activityEl.textContent = '';
+        }
+      }
+    }
+
+    function connectLanyardSocket(id){
+      let socket;
+      let heartbeatInterval;
+      const reconnectDelay = 3000;
+
+      function connect(){
+        socket = new WebSocket('wss://api.lanyard.rest/socket');
+
+        socket.onopen = () => {
+          socket.send(JSON.stringify({ op: 2, d: { subscribe_to_id: id } }));
+        };
+
+        socket.onmessage = (event) => {
+          const msg = JSON.parse(event.data);
+
+          if(msg.op === 1){
+            if(heartbeatInterval) clearInterval(heartbeatInterval);
+            heartbeatInterval = setInterval(() => {
+              if(socket.readyState === WebSocket.OPEN){
+                socket.send(JSON.stringify({ op: 3 }));
+              }
+            }, msg.d.heartbeat_interval);
+          }
+
+          if(msg.op === 0 && (msg.t === 'INIT_STATE' || msg.t === 'PRESENCE_UPDATE')){
+            renderPresence(msg.d);
+          }
+        };
+
+        socket.onclose = () => {
+          if(heartbeatInterval) clearInterval(heartbeatInterval);
+          setTimeout(connect, reconnectDelay);
+        };
+
+        socket.onerror = () => {
+          socket.close();
+        };
+      }
+
+      connect();
+    }
+
+    if(DISCORD_ID && DISCORD_ID !== 'YOUR_DISCORD_ID_HERE'){
+      renderDiscordFallback('connecting…');
+      connectLanyardSocket(DISCORD_ID);
+    } else {
+      renderDiscordFallback('not configured');
+    }
+
+    const ghLine = document.getElementById('githubLine');
+    fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public`)
+      .then(r => r.json())
+      .then(events => {
+        const push = Array.isArray(events) ? events.find(e => e.type === 'PushEvent') : null;
+        if(!push || !ghLine){ throw new Error('no recent push event'); }
+        const repo = push.repo.name.split('/')[1];
+        const commit = push.payload.commits && push.payload.commits[push.payload.commits.length - 1];
+        const msg = commit ? commit.message.split('\n')[0] : 'updated';
+        const url = `https://github.com/${push.repo.name}`;
+        ghLine.innerHTML = `<a href="${url}" target="_blank" rel="noopener">${repo}</a> — "${msg.length > 48 ? msg.slice(0,48) + '…' : msg}"`;
+      })
+      .catch(() => {
+        if(ghLine) ghLine.textContent = 'no recent public activity';
+      });
+  })();
+
   document.querySelectorAll('section').forEach(el => el.classList.add('reveal-on-scroll'));
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal-on-scroll').forEach(el => io.observe(el));
 
-  // ---- custom cursor ----
   (function(){
     const dot = document.getElementById('curDot');
     const ring = document.getElementById('curRing');
@@ -545,6 +997,8 @@
       });
     }
     bindHovers();
+
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
 
     document.documentElement.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
     document.documentElement.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '0.7'; });
