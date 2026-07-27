@@ -172,76 +172,97 @@
   .live-value.dim{ color:var(--muted); font-weight:400; }
   .live-divider{ height:1px; background:var(--border); margin:2px 0; }
 
-  .live-discord{
-    display:flex; align-items:center; gap:12px;
-    padding:10px; border:1px solid var(--border); border-radius:8px;
-    background:var(--bg);
+  /* ---------- LIVE PROFILE CARD ---------- */
+  .profile-card{
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    height:100%;
   }
-  .discord-avatar{
-    width:38px; height:38px; border-radius:50%;
-    border:1px solid var(--border);
+  .pc-top{ display:flex; align-items:flex-start; gap:14px; }
+  .pc-avatar{
+    position:relative;
+    width:52px; height:52px; border-radius:50%;
+    background:linear-gradient(160deg, #1c3d3a, #0e211f);
+    border:2px solid var(--cyan);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--mono); font-weight:700; font-size:16px; color:var(--cyan);
+    flex-shrink:0;
+    overflow:hidden;
+  }
+  .pc-avatar img{
+    width:100%; height:100%; object-fit:cover; border-radius:50%;
+  }
+  .pc-dot{
+    position:absolute; right:-2px; bottom:-2px;
+    width:14px; height:14px; border-radius:50%;
+    background:var(--dim); border:2px solid var(--surface);
+    transition:background .3s, box-shadow .3s;
+  }
+  .pc-dot.online{ background:var(--green); box-shadow:0 0 6px var(--green); }
+  .pc-dot.idle{ background:var(--amber); box-shadow:0 0 6px var(--amber); }
+  .pc-dot.dnd{ background:var(--red); box-shadow:0 0 6px var(--red); }
+  .pc-bubble{
     background:var(--surface-raised);
-    object-fit:cover;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px 13px;
+    font-family:var(--mono); font-size:12px; color:var(--text);
+    line-height:1.5;
+    position:relative;
+    min-height:20px;
+    overflow:hidden; text-overflow:ellipsis;
   }
-  .discord-info{ display:flex; flex-direction:column; gap:3px; min-width:0; flex:1; }
-  .discord-name{
-    font-family:var(--mono); font-size:13.5px; font-weight:600; color:var(--text);
-    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  .pc-bubble::before{
+    content:"";
+    position:absolute; left:-6px; top:14px;
+    width:10px; height:10px;
+    background:var(--surface-raised);
+    border-left:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    transform:rotate(45deg);
   }
-  .discord-status{
-    font-family:var(--mono); font-size:11.5px; color:var(--muted);
+  .pc-bubble .activity-elapsed{ color:var(--muted); }
+  .pc-name{ font-size:19px; font-weight:600; color:var(--text); font-family:var(--sans); }
+  .pc-handle{ font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:2px; }
+  .pc-badge{
+    align-self:flex-start;
+    font-family:var(--mono); font-size:11px; color:var(--cyan);
+    border:1px solid var(--cyan); border-radius:20px;
+    padding:4px 12px;
     display:flex; align-items:center; gap:6px;
+    transition:color .3s, border-color .3s;
   }
-  .status-dot{
-    width:7px; height:7px; border-radius:50%; background:var(--dim); flex-shrink:0;
-  }
-  .status-dot.online{ background:var(--green); box-shadow:0 0 6px var(--green); }
-  .status-dot.idle{ background:var(--amber); box-shadow:0 0 6px var(--amber); }
-  .status-dot.dnd{ background:var(--red); box-shadow:0 0 6px var(--red); }
-  .platform-icon{ width:12px; height:12px; color:var(--dim); flex-shrink:0; }
-  .discord-activity{
-    font-family:var(--mono); font-size:11.5px; color:var(--cyan);
-    padding-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-  }
-  .activity-elapsed{ color:var(--muted); }
-
-  .spotify-card{
-    display:flex; align-items:center; gap:12px;
-    padding:10px; border:1px solid var(--border); border-radius:8px;
+  .pc-badge.online{ color:var(--green); border-color:var(--green); }
+  .pc-badge.idle{ color:var(--amber); border-color:var(--amber); }
+  .pc-badge.dnd{ color:var(--red); border-color:var(--red); }
+  .pc-spotify{
+    display:flex; align-items:center; gap:10px;
+    padding:9px 10px; border:1px solid var(--border); border-radius:8px;
     background:var(--bg);
   }
-  .spotify-art{
-    width:44px; height:44px; border-radius:6px; flex-shrink:0;
-    object-fit:cover; border:1px solid var(--border);
+  .pc-spotify img{ width:34px; height:34px; border-radius:5px; object-fit:cover; border:1px solid var(--border); flex-shrink:0; }
+  .pc-spotify-info{ display:flex; flex-direction:column; gap:3px; min-width:0; flex:1; }
+  .pc-spotify-track{ font-family:var(--mono); font-size:12px; font-weight:600; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .pc-spotify-artist{ font-family:var(--mono); font-size:10.5px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .pc-spotify-bar{ height:3px; border-radius:2px; background:var(--border); margin-top:2px; overflow:hidden; }
+  .pc-spotify-bar-fill{ height:100%; background:var(--green); border-radius:2px; transition:width 1s linear; }
+  .pc-icons{ display:flex; gap:10px; }
+  .pc-icon{
+    width:34px; height:34px; border-radius:50%;
+    background:var(--surface-raised); border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; color:var(--muted);
+    transition:color .2s, border-color .2s;
   }
-  .spotify-info{ display:flex; flex-direction:column; gap:4px; min-width:0; flex:1; }
-  .spotify-track{
-    font-family:var(--mono); font-size:12.5px; font-weight:600; color:var(--text);
-    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-  }
-  .spotify-artist{
-    font-family:var(--mono); font-size:11px; color:var(--muted);
-    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-  }
-  .spotify-bar{
-    height:3px; border-radius:2px; background:var(--border);
-    margin-top:2px; overflow:hidden;
-  }
-  .spotify-bar-fill{
-    height:100%; background:var(--green); border-radius:2px;
-    transition:width 1s linear;
-  }
-  .spotify-time{
-    display:flex; justify-content:space-between;
-    font-family:var(--mono); font-size:10px; color:var(--dim); margin-top:2px;
-  }
-  .spotify-note{ font-family:var(--mono); font-size:11px; color:var(--dim); }
-
-  .live-github{ display:flex; flex-direction:column; gap:5px; }
-  .live-github .live-value{ font-size:12.5px; line-height:1.5; }
-  .live-github a{ color:var(--cyan); }
-  .live-github a:hover{ text-decoration:underline; }
-  .term{
+  .pc-icon:hover{ color:var(--cyan); border-color:var(--cyan); }
+  .pc-icon svg{ width:16px; height:16px; }
+  .pc-divider{ border:none; border-top:1px solid var(--border); margin:2px 0; }
+  .pc-github{ font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.5; margin-top:auto; }
+  .pc-github a{ color:var(--cyan); }
+  .pc-github a:hover{ text-decoration:underline; }
+  .pc-updated{ font-family:var(--mono); font-size:10.5px; color:var(--dim); margin-top:4px; }
     background:var(--surface);
     border:1px solid var(--border);
     border-radius:10px;
@@ -414,43 +435,41 @@
   .reveal-on-scroll{ opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease; }
   .reveal-on-scroll.in{ opacity:1; transform:none; }
 
-  .cur-dot, .cur-ring{
+  .cur-dot{
     position:fixed;
     top:0; left:0;
+    width:6px; height:6px;
+    background:var(--cyan);
+    border-radius:50%;
     pointer-events:none;
     z-index:9999;
-    border-radius:50%;
     transform:translate(-50%,-50%);
     will-change:transform;
     opacity:0;
-  }
-  .cur-dot{
-    width:6px; height:6px;
-    background:var(--cyan);
     box-shadow:0 0 8px var(--cyan);
     transition:opacity .15s;
   }
-  .cur-ring{
-    width:34px; height:34px;
-    border:1.5px solid var(--cyan);
-    transition:width .25s ease, height .25s ease, opacity .25s ease, background .25s ease;
+  .cur-trail{
+    position:fixed;
+    top:0; left:0;
+    width:6px; height:6px;
+    background:var(--cyan);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:9998;
+    transform:translate(-50%,-50%);
+    will-change:transform, opacity;
+    opacity:0;
   }
   html.cursor-on, html.cursor-on body, html.cursor-on a, html.cursor-on button{
     cursor:none !important;
   }
   html.cursor-on .cur-dot{ opacity:1; }
-  html.cursor-on .cur-ring{ opacity:0.7; }
-  html.cursor-on .cur-ring.active{
-    width:54px; height:54px;
-    background:rgba(45,212,191,0.08);
-    opacity:1;
-  }
-  html.cursor-on .cur-ring.click{ width:26px; height:26px; }
+  html.cursor-on .cur-trail{ opacity:1; }
 </style>
 </head>
 <body>
 <div class="cur-dot" id="curDot"></div>
-<div class="cur-ring" id="curRing"></div>
 
 <header>
   <nav class="wrap">
@@ -484,49 +503,45 @@
           <div class="term-body" id="termBody"></div>
         </div>
         <div class="hero-art">
-          <div class="hero-art-bar">$ status --live</div>
-          <div class="hero-art-body live-panel">
-            <div class="live-row">
-              <span class="live-label">local time (IST)</span>
-              <span class="live-value" id="liveClock">--:--:--</span>
+          <div class="profile-card">
+            <div class="pc-top">
+              <div class="pc-avatar" id="pcAvatar">
+                <span id="pcInitials">HR</span>
+                <img id="pcAvatarImg" style="display:none;" alt="">
+                <span class="pc-dot" id="pcDot"></span>
+              </div>
+              <div class="pc-bubble" id="pcBubble">building recon tools &amp; occasionally sleeping</div>
             </div>
+            <div>
+              <div class="pc-name">Himanshu Rawat</div>
+              <div class="pc-handle">himanshurwtt · Python Dev / Security</div>
+            </div>
+            <div class="pc-badge" id="pcBadge">connecting…</div>
 
-            <div class="live-divider"></div>
-
-            <div class="live-discord" id="discordCard">
-              <img class="discord-avatar" id="discordAvatar" src="" alt="" style="display:none;">
-              <div class="discord-info">
-                <span class="discord-name" id="discordName">connecting…</span>
-                <span class="discord-status" id="discordStatus">
-                  <span class="status-dot" id="discordDot"></span>
-                  <svg class="platform-icon" id="platformIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="display:none;"></svg>
-                  <span id="discordStatusText">checking presence</span>
-                </span>
-                <span class="discord-activity" id="discordActivity"></span>
+            <div class="pc-spotify" id="pcSpotify" style="display:none;">
+              <img id="pcSpotifyArt" src="" alt="">
+              <div class="pc-spotify-info">
+                <span class="pc-spotify-track" id="pcSpotifyTrack"></span>
+                <span class="pc-spotify-artist" id="pcSpotifyArtist"></span>
+                <div class="pc-spotify-bar"><div class="pc-spotify-bar-fill" id="pcSpotifyBarFill" style="width:0%"></div></div>
               </div>
             </div>
 
-            <div class="spotify-card" id="spotifyCard" style="display:none;">
-              <img class="spotify-art" id="spotifyArt" src="" alt="">
-              <div class="spotify-info">
-                <span class="spotify-track" id="spotifyTrack"></span>
-                <span class="spotify-artist" id="spotifyArtist"></span>
-                <div class="spotify-bar"><div class="spotify-bar-fill" id="spotifyBarFill" style="width:0%"></div></div>
-                <div class="spotify-time">
-                  <span id="spotifyElapsed">0:00</span>
-                  <span id="spotifyDuration">0:00</span>
-                </div>
+            <div class="pc-icons">
+              <a class="pc-icon" href="https://github.com/himanshurwtt" target="_blank" rel="noopener" title="GitHub">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.79-.25.79-.55v-1.94c-3.2.7-3.87-1.54-3.87-1.54-.53-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.4-5.27 5.69.42.36.78 1.07.78 2.16v3.2c0 .31.21.66.8.55A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+              </a>
+              <a class="pc-icon" href="https://discord.com/users/1074363415591653387" target="_blank" rel="noopener" title="Discord">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.9-1.52.07.07 0 0 0-.08.04c-.21.38-.45.86-.61 1.25a18.3 18.3 0 0 0-5.48 0 12.6 12.6 0 0 0-.62-1.25.08.08 0 0 0-.08-.04c-1.7.29-3.36.8-4.9 1.52a.07.07 0 0 0-.03.03C.98 8.6.31 12.68.65 16.72a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 5.99 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.22-2a.08.08 0 0 0-.04-.11 13 13 0 0 1-1.87-.89.08.08 0 0 1-.01-.13c.13-.09.25-.19.37-.28a.08.08 0 0 1 .08-.01c3.93 1.79 8.18 1.79 12.06 0a.08.08 0 0 1 .08.01c.12.1.24.19.37.28a.08.08 0 0 1-.01.13c-.6.35-1.22.65-1.87.89a.08.08 0 0 0-.04.11c.36.7.77 1.36 1.22 1.99a.08.08 0 0 0 .08.03 19.8 19.8 0 0 0 6-3.03.08.08 0 0 0 .03-.06c.4-4.68-.67-8.73-2.83-12.32a.06.06 0 0 0-.03-.03ZM8.02 14.24c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42Zm7.97 0c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42Z"/></svg>
+              </a>
+              <div class="pc-icon" id="pcPlatformIcon" title="Platform" style="display:none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" id="pcPlatformSvg"></svg>
               </div>
             </div>
 
-            <div class="live-divider"></div>
-
-            <div class="live-github">
-              <span class="live-label">latest github activity</span>
-              <span class="live-value dim" id="githubLine">fetching…</span>
-            </div>
-
-            <div class="hero-art-caption" id="liveCaption">live via lanyard + github api</div>
+            <hr class="pc-divider">
+            <div class="pc-github" id="pcGithubLine">fetching latest github activity…</div>
+            <div class="pc-updated">live via lanyard + github api</div>
           </div>
         </div>
       </div>
@@ -751,47 +766,29 @@ OWNER_ID=your_discord_user_id</pre>
   (function(){
     const DISCORD_ID = '1074363415591653387';
     const GITHUB_USERNAME = 'himanshurwtt';
+    const DEFAULT_BIO = 'building recon tools &amp; occasionally sleeping';
 
-    const clockEl = document.getElementById('liveClock');
-    function tick(){
-      const now = new Date();
-      const ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
-      const hh = String(ist.getHours()).padStart(2,'0');
-      const mm = String(ist.getMinutes()).padStart(2,'0');
-      const ss = String(ist.getSeconds()).padStart(2,'0');
-      if(clockEl) clockEl.textContent = `${hh}:${mm}:${ss}`;
-    }
-    tick();
-    setInterval(tick, 1000);
+    const avatarWrap = document.getElementById('pcAvatar');
+    const initialsEl = document.getElementById('pcInitials');
+    const avatarImgEl = document.getElementById('pcAvatarImg');
+    const dotEl = document.getElementById('pcDot');
+    const bubbleEl = document.getElementById('pcBubble');
+    const badgeEl = document.getElementById('pcBadge');
+    const spotifyWrap = document.getElementById('pcSpotify');
+    const spotifyArt = document.getElementById('pcSpotifyArt');
+    const spotifyTrack = document.getElementById('pcSpotifyTrack');
+    const spotifyArtist = document.getElementById('pcSpotifyArtist');
+    const spotifyBarFill = document.getElementById('pcSpotifyBarFill');
+    const platformIconWrap = document.getElementById('pcPlatformIcon');
+    const platformSvg = document.getElementById('pcPlatformSvg');
 
-    const nameEl = document.getElementById('discordName');
-    const dotEl = document.getElementById('discordDot');
-    const statusTextEl = document.getElementById('discordStatusText');
-    const avatarEl = document.getElementById('discordAvatar');
-    const activityEl = document.getElementById('discordActivity');
-    const platformIconEl = document.getElementById('platformIcon');
-    const spotifyCard = document.getElementById('spotifyCard');
-    const spotifyArt = document.getElementById('spotifyArt');
-    const spotifyTrack = document.getElementById('spotifyTrack');
-    const spotifyArtist = document.getElementById('spotifyArtist');
-    const spotifyBarFill = document.getElementById('spotifyBarFill');
-    const spotifyElapsed = document.getElementById('spotifyElapsed');
-    const spotifyDuration = document.getElementById('spotifyDuration');
-
-    const STATUS_LABEL = { online: 'online', idle: 'idle', dnd: 'do not disturb', offline: 'offline' };
+    const STATUS_LABEL = { online: '🟢 online', idle: '🌙 idle', dnd: '⛔ do not disturb', offline: '⚪ offline' };
 
     const PLATFORM_ICONS = {
       desktop: '<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',
       mobile: '<rect x="6" y="2" width="12" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/>',
       web: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20"/>'
     };
-
-    function fmtTime(ms){
-      const totalSec = Math.max(0, Math.floor(ms / 1000));
-      const m = Math.floor(totalSec / 60);
-      const s = totalSec % 60;
-      return `${m}:${String(s).padStart(2,'0')}`;
-    }
 
     function fmtElapsed(ms){
       const totalSec = Math.max(0, Math.floor(ms / 1000));
@@ -803,12 +800,12 @@ OWNER_ID=your_discord_user_id</pre>
       return `${s}s`;
     }
 
-    function renderDiscordFallback(msg){
-      if(nameEl) nameEl.textContent = 'Himanshu Rawat';
-      if(statusTextEl) statusTextEl.textContent = msg || 'presence unavailable';
-      if(dotEl) dotEl.className = 'status-dot';
-      if(avatarEl) avatarEl.style.display = 'none';
-      if(spotifyCard) spotifyCard.style.display = 'none';
+    function renderFallback(msg){
+      if(badgeEl) badgeEl.textContent = msg || 'presence unavailable';
+      if(badgeEl) badgeEl.className = 'pc-badge';
+      if(dotEl) dotEl.className = 'pc-dot';
+      if(spotifyWrap) spotifyWrap.style.display = 'none';
+      if(bubbleEl) bubbleEl.innerHTML = DEFAULT_BIO;
     }
 
     let spotifyTimer = null;
@@ -818,34 +815,36 @@ OWNER_ID=your_discord_user_id</pre>
       const now = Date.now();
       const pct = Math.min(100, Math.max(0, ((now - start) / (end - start)) * 100));
       if(spotifyBarFill) spotifyBarFill.style.width = pct + '%';
-      if(spotifyElapsed) spotifyElapsed.textContent = fmtTime(now - start);
       if(now >= end && spotifyTimer) clearInterval(spotifyTimer);
     }
 
     function renderPresence(d){
       const status = d.discord_status || 'offline';
 
-      if(nameEl) nameEl.textContent = d.discord_user.global_name || d.discord_user.username;
-      if(dotEl) dotEl.className = 'status-dot ' + (status !== 'offline' ? status : '');
-      if(statusTextEl) statusTextEl.textContent = STATUS_LABEL[status] || status;
+      if(dotEl) dotEl.className = 'pc-dot ' + (status !== 'offline' ? status : '');
+      if(badgeEl){
+        badgeEl.textContent = STATUS_LABEL[status] || status;
+        badgeEl.className = 'pc-badge ' + (status !== 'offline' ? status : '');
+      }
 
-      if(avatarEl && d.discord_user.avatar){
-        avatarEl.src = `https://cdn.discordapp.com/avatars/${d.discord_user.id}/${d.discord_user.avatar}.png?size=64`;
-        avatarEl.style.display = '';
-      } else if(avatarEl){
-        avatarEl.style.display = 'none';
+      if(d.discord_user && d.discord_user.avatar){
+        if(avatarImgEl){
+          avatarImgEl.src = `https://cdn.discordapp.com/avatars/${d.discord_user.id}/${d.discord_user.avatar}.png?size=64`;
+          avatarImgEl.style.display = '';
+        }
+        if(initialsEl) initialsEl.style.display = 'none';
       }
 
       let platform = null;
       if(d.active_on_discord_desktop) platform = 'desktop';
       else if(d.active_on_discord_mobile) platform = 'mobile';
       else if(d.active_on_discord_web) platform = 'web';
-      if(platformIconEl){
+      if(platformIconWrap && platformSvg){
         if(platform){
-          platformIconEl.innerHTML = PLATFORM_ICONS[platform];
-          platformIconEl.style.display = '';
+          platformSvg.innerHTML = PLATFORM_ICONS[platform];
+          platformIconWrap.style.display = '';
         } else {
-          platformIconEl.style.display = 'none';
+          platformIconWrap.style.display = 'none';
         }
       }
 
@@ -854,31 +853,33 @@ OWNER_ID=your_discord_user_id</pre>
 
       if(d.listening_to_spotify && d.spotify){
         const sp = d.spotify;
-        if(spotifyCard) spotifyCard.style.display = 'flex';
-        if(activityEl) activityEl.textContent = '';
+        if(spotifyWrap) spotifyWrap.style.display = 'flex';
         if(spotifyArt) spotifyArt.src = sp.album_art_url || '';
         if(spotifyTrack) spotifyTrack.textContent = sp.song;
         if(spotifyArtist) spotifyArtist.textContent = sp.artist;
-        if(spotifyDuration) spotifyDuration.textContent = fmtTime(sp.timestamps.end - sp.timestamps.start);
         updateSpotifyProgress(sp.timestamps.start, sp.timestamps.end);
         spotifyTimer = setInterval(() => updateSpotifyProgress(sp.timestamps.start, sp.timestamps.end), 1000);
+        if(bubbleEl) bubbleEl.innerHTML = `🎧 ${sp.song} — ${sp.artist}`;
       } else {
-        if(spotifyCard) spotifyCard.style.display = 'none';
+        if(spotifyWrap) spotifyWrap.style.display = 'none';
         const activity = (d.activities || []).find(a => a.type === 0 && a.name !== 'Custom Status');
+        const customStatus = (d.activities || []).find(a => a.type === 4 && a.state);
         if(activity){
           const label = `▸ ${activity.name}${activity.details ? ' — ' + activity.details : ''}`;
           if(activity.timestamps && activity.timestamps.start){
             const start = activity.timestamps.start;
             const render = () => {
-              if(activityEl) activityEl.innerHTML = `${label} <span class="activity-elapsed">(${fmtElapsed(Date.now() - start)})</span>`;
+              if(bubbleEl) bubbleEl.innerHTML = `${label} <span class="activity-elapsed">(${fmtElapsed(Date.now() - start)})</span>`;
             };
             render();
             activityTimer = setInterval(render, 1000);
-          } else if(activityEl){
-            activityEl.textContent = label;
+          } else if(bubbleEl){
+            bubbleEl.textContent = label;
           }
-        } else if(activityEl){
-          activityEl.textContent = '';
+        } else if(customStatus){
+          if(bubbleEl) bubbleEl.textContent = customStatus.state;
+        } else if(bubbleEl){
+          bubbleEl.innerHTML = DEFAULT_BIO;
         }
       }
     }
@@ -926,13 +927,13 @@ OWNER_ID=your_discord_user_id</pre>
     }
 
     if(DISCORD_ID && DISCORD_ID !== 'YOUR_DISCORD_ID_HERE'){
-      renderDiscordFallback('connecting…');
+      renderFallback('connecting…');
       connectLanyardSocket(DISCORD_ID);
     } else {
-      renderDiscordFallback('not configured');
+      renderFallback('not configured');
     }
 
-    const ghLine = document.getElementById('githubLine');
+    const ghLine = document.getElementById('pcGithubLine');
     fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public`)
       .then(r => r.json())
       .then(events => {
@@ -957,8 +958,7 @@ OWNER_ID=your_discord_user_id</pre>
 
   (function(){
     const dot = document.getElementById('curDot');
-    const ring = document.getElementById('curRing');
-    if(!dot || !ring) return;
+    if(!dot) return;
 
     const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -966,42 +966,74 @@ OWNER_ID=your_discord_user_id</pre>
 
     document.documentElement.classList.add('cursor-on');
 
-    let mx = window.innerWidth/2, my = window.innerHeight/2;
-    let rx = mx, ry = my;
-    let moved = false;
+    const TRAIL_COUNT = 18;
+    const trail = [];
+    const positions = [];
+
+    for(let i = 0; i < TRAIL_COUNT; i++){
+      const el = document.createElement('div');
+      el.className = 'cur-trail';
+      el.style.width = (6 - i * 0.25) + 'px';
+      el.style.height = (6 - i * 0.25) + 'px';
+      el.style.opacity = (1 - i / TRAIL_COUNT) * 0.6;
+      el.style.background = `rgba(45,212,191,${(1 - i / TRAIL_COUNT) * 0.5})`;
+      el.style.boxShadow = `0 0 ${4 - i * 0.2}px rgba(45,212,191,${(1 - i / TRAIL_COUNT) * 0.4})`;
+      document.body.appendChild(el);
+      trail.push(el);
+      positions.push({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+    }
+
+    let mx = window.innerWidth / 2;
+    let my = window.innerHeight / 2;
 
     dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
-    ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
 
     window.addEventListener('mousemove', (e) => {
       mx = e.clientX; my = e.clientY;
-      moved = true;
       dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
     });
 
     function loop(){
-      rx += (mx - rx) * 0.18;
-      ry += (my - ry) * 0.18;
-      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
+      positions[0].x += (mx - positions[0].x) * 0.35;
+      positions[0].y += (my - positions[0].y) * 0.35;
+
+      for(let i = 1; i < TRAIL_COUNT; i++){
+        positions[i].x += (positions[i - 1].x - positions[i].x) * 0.3;
+        positions[i].y += (positions[i - 1].y - positions[i].y) * 0.3;
+      }
+
+      for(let i = 0; i < TRAIL_COUNT; i++){
+        trail[i].style.transform = `translate(${positions[i].x}px, ${positions[i].y}px) translate(-50%,-50%)`;
+      }
+
       requestAnimationFrame(loop);
     }
     loop();
 
-    document.addEventListener('mousedown', () => ring.classList.add('click'));
-    document.addEventListener('mouseup', () => ring.classList.remove('click'));
-
     function bindHovers(){
       document.querySelectorAll('a, button, .proj, .contact-card, .scanline').forEach(el => {
-        el.addEventListener('mouseenter', () => ring.classList.add('active'));
-        el.addEventListener('mouseleave', () => ring.classList.remove('active'));
+        el.addEventListener('mouseenter', () => {
+          trail.forEach((t, i) => {
+            t.style.width = (10 - i * 0.3) + 'px';
+            t.style.height = (10 - i * 0.3) + 'px';
+            t.style.background = `rgba(45,212,191,${(1 - i / TRAIL_COUNT) * 0.8})`;
+          });
+        });
+        el.addEventListener('mouseleave', () => {
+          trail.forEach((t, i) => {
+            t.style.width = (6 - i * 0.25) + 'px';
+            t.style.height = (6 - i * 0.25) + 'px';
+            t.style.background = `rgba(45,212,191,${(1 - i / TRAIL_COUNT) * 0.5})`;
+          });
+        });
       });
     }
     bindHovers();
 
     document.addEventListener('contextmenu', (e) => e.preventDefault());
 
-    document.documentElement.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
-    document.documentElement.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '0.7'; });
+    document.documentElement.addEventListener('mouseleave', () => { dot.style.opacity = '0'; trail.forEach(t => t.style.opacity = '0'); });
+    document.documentElement.addEventListener('mouseenter', () => { dot.style.opacity = '1'; trail.forEach(t => t.style.opacity = '1'); });
   })();
 </script>
 
